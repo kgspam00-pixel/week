@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Promise Day</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* 🤍 Promise Day – long, honest vows */
+
+    .promise-title {
+      font-size: 28px;
+    }
+
+    .promise-sub {
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 34px;
+    }
+
+    .promise {
+      margin: 18px 0;
+      font-size: 21px;
+      line-height: 1.6;
+    }
+
+    .soft {
+      margin: 30px 0;
+      font-size: 20px;
+      opacity: 0.75;
+      font-style: italic;
+    }
+
+    .final {
+      margin-top: 38px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="week" id="day-root">
+
+  <!-- LOCKED -->
+  <section id="locked" style="display:none;">
+    <h1>Not yet 🤍</h1>
+    <p class="subtitle">
+      This page opens on Promise Day.<br>
+      Some promises should be spoken slowly.
+    </p>
+  </section>
+
+  <!-- UNLOCKED -->
+  <section id="unlocked" style="display:none;">
+    <h1 class="promise-title">Promise Day</h1>
+    <p class="promise-sub">
+      These aren’t dramatic promises.<br>
+      They’re the everyday ones.
+    </p>
+
+    <p class="promise">
+      I promise to choose you — not just when it’s easy, but when it requires effort.
+    </p>
+
+    <p class="promise">
+      I promise to be loyal.  
+      To never cheat.  
+      To never give my heart or attention where it doesn’t belong.
+    </p>
+
+    <p class="promise">
+      I promise to never walk away when things get uncomfortable.  
+      To stay. To talk. To work through it.
+    </p>
+
+    <p class="promise">
+      I promise to listen — really listen — even when you’re explaining the same thing for the third time.
+    </p>
+
+    <p class="promise">
+      I promise to laugh at your bad jokes.<br>
+      And the ones that are so bad they circle back to being funny.
+    </p>
+
+    <p class="promise">
+      I promise to tolerate your dark humor,<br>
+      even when I roll my eyes a little.
+    </p>
+
+    <p class="promise">
+      I promise to correct your English — gently —  
+      and pretend I didn’t enjoy being right.
+    </p>
+
+    <p class="promise">
+      I promise to be proud of you.  
+      And more importantly, to remind *you* of that when you forget.
+    </p>
+
+    <p class="promise">
+      I promise to be your cheerleader —  
+      in rooms you walk into confidently, and in moments when you doubt yourself.
+    </p>
+
+    <p class="promise">
+      I promise to celebrate your wins like they’re mine.  
+      Because they are.
+    </p>
+
+    <p class="promise">
+      I promise to be patient on your bad days,  
+      and grateful on the good ones.
+    </p>
+
+    <p class="soft">
+      I can’t promise perfection.<br>
+      But I can promise intention.
+    </p>
+
+    <p class="final">
+      This is me — choosing you, every day.
+    </p>
+
+    <p class="footer">
+      Tomorrow is about closeness 🫂
+    </p>
+  </section>
+
+</main>
+
+<script src="../week.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    handleDayUnlock("promise");
+  });
+</script>
+
+</body>
+</html>

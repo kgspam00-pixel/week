@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Propose Day</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* 💍 Propose Day – vulnerable tone */
+
+    .propose-title {
+      font-size: 28px;
+    }
+
+    .propose-sub {
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .line {
+      margin: 22px 0;
+      font-size: 22px;
+    }
+
+    .pause {
+      margin: 32px 0;
+      font-size: 20px;
+      opacity: 0.75;
+      font-style: italic;
+    }
+
+    .question {
+      margin-top: 36px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .signature {
+      margin-top: 28px;
+      font-size: 18px;
+      font-style: italic;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="week" id="day-root">
+
+  <!-- LOCKED -->
+  <section id="locked" style="display:none;">
+    <h1>Not yet 💍</h1>
+    <p class="subtitle">
+      This page opens on Propose Day.<br>
+      Some words need courage before they can be said.
+    </p>
+  </section>
+
+  <!-- UNLOCKED -->
+  <section id="unlocked" style="display:none;">
+    <h1 class="propose-title">Propose Day</h1>
+    <p class="propose-sub">
+      This is me, being honest.
+    </p>
+
+    <p class="line">
+      I’ve never been very good at saying things before I’m sure.
+    </p>
+
+    <p class="line">
+      I overthink. I hold back. I wait.
+    </p>
+
+    <p class="line">
+      But with you, waiting feels harder than speaking.
+    </p>
+
+    <p class="pause">
+      So here it is — without certainty, without guarantees.
+    </p>
+
+    <p class="line">
+      I don’t know what the future looks like.
+    </p>
+
+    <p class="line">
+      But I know who I want to walk into it with.
+    </p>
+
+    <p class="question">
+      Will you be my forever?
+    </p>
+
+    <p class="signature">
+      — me, choosing you
+    </p>
+
+    <p class="footer">
+      Tomorrow is sweeter 🍫
+    </p>
+  </section>
+
+</main>
+
+<script src="../week.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    handleDayUnlock("propose");
+  });
+</script>
+
+</body>
+</html>

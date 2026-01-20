@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teddy Day</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* 🧸 Teddy Day – warmth + vulnerability */
+
+    .teddy-title {
+      font-size: 28px;
+    }
+
+    .teddy-sub {
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 32px;
+    }
+
+    .line {
+      margin: 22px 0;
+      font-size: 22px;
+    }
+
+    .soft {
+      margin: 28px 0;
+      font-size: 20px;
+      opacity: 0.75;
+      font-style: italic;
+    }
+
+    .warm {
+      margin-top: 36px;
+      font-size: 23px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="week" id="day-root">
+
+  <!-- LOCKED -->
+  <section id="locked" style="display:none;">
+    <h1>Not yet 🧸</h1>
+    <p class="subtitle">
+      This page opens on Teddy Day.<br>
+      Some comfort can’t be rushed.
+    </p>
+  </section>
+
+  <!-- UNLOCKED -->
+  <section id="unlocked" style="display:none;">
+    <h1 class="teddy-title">Teddy Day</h1>
+    <p class="teddy-sub">
+      This one is about warmth.
+    </p>
+
+    <p class="line">
+      There are days when I don’t need advice.
+    </p>
+
+    <p class="line">
+      Or solutions. Or answers.
+    </p>
+
+    <p class="line">
+      Just someone who stays.
+    </p>
+
+    <p class="soft">
+      And somehow, that’s always you.
+    </p>
+
+    <p class="line">
+      You feel like safety without asking questions.
+    </p>
+
+    <p class="line">
+      Like arms that don’t rush to let go.
+    </p>
+
+    <p class="line">
+      Like being held in a way that says,<br>
+      “You don’t have to be okay right now.”
+    </p>
+
+    <p class="warm">
+      You’re my favourite kind of comfort.<br>
+      My giant, snuggly teddy bear.
+    </p>
+
+    <p class="footer">
+      Tomorrow is about promises 🤍
+    </p>
+  </section>
+
+</main>
+
+<script src="../week.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    handleDayUnlock("teddy");
+  });
+</script>
+
+</body>
+</html>
