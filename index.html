@@ -1,98 +1,34 @@
-/* =====================================
-   Valentine Week – FINAL Unlock Logic
-   Timezone: IST
-   ===================================== */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine Week</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* ---------- IST DATE ---------- */
-function getISTDate() {
-  const now = new Date();
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  return new Date(utc + 5.5 * 60 * 60 * 1000);
-}
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
 
-/* ---------- UNLOCK DATES ---------- */
-/* NOTE: Month is 0-based (Feb = 1) */
-const unlockDates = {
-  rose:      new Date(2026, 1, 7),
-  propose:   new Date(2026, 1, 8),
-  chocolate: new Date(2026, 1, 9),
-  teddy:     new Date(2026, 1, 10),
-  promise:   new Date(2026, 1, 11),
-  hug:       new Date(2026, 1, 12),
-  kiss:      new Date(2026, 1, 13),
-  valentine: new Date(2026, 1, 14)
-};
+<body>
 
-/* ---------- LANDING PAGE LOGIC ---------- */
-document.addEventListener("DOMContentLoaded", () => {
-  const today = getISTDate();
-  today.setHours(0, 0, 0, 0);
+<main class="week">
+  <h1>For You — One Day at a Time</h1>
+  <p class="subtitle">Some things are meant to be opened slowly.</p>
 
-  document.querySelectorAll("[data-day]").forEach(el => {
-    const key = el.dataset.day;
-    const unlockDate = unlockDates[key];
+  <div class="days">
+    <a class="day-btn" data-day="rose" href="days/rose.html">🌹 Rose Day</a>
+    <a class="day-btn" data-day="propose" href="days/propose.html">💍 Propose Day</a>
+    <a class="day-btn" data-day="chocolate" href="days/chocolate.html">🍫 Chocolate Day</a>
+    <a class="day-btn" data-day="teddy" href="days/teddy.html">🧸 Teddy Day</a>
+    <a class="day-btn" data-day="promise" href="days/promise.html">🤍 Promise Day</a>
+    <a class="day-btn" data-day="hug" href="days/hug.html">🫂 Hug Day</a>
+    <a class="day-btn" data-day="kiss" href="days/kiss.html">💋 Kiss Day</a>
+    <a class="day-btn" data-day="valentine" href="days/valentine.html">❤️ Valentine’s Day</a>
+  </div>
 
-    if (!unlockDate || today < unlockDate) {
-      el.classList.add("locked");
-    } else {
-      el.classList.remove("locked");
-    }
-  });
-});
+  <p class="footer">This page unlocks itself. Nothing to do but wait.</p>
+</main>
 
-/* ---------- DAY PAGE HANDLER ---------- */
-function handleDayUnlock(dayKey) {
-  const today = getISTDate();
-  today.setHours(0, 0, 0, 0);
-
-  const unlockDate = unlockDates[dayKey];
-
-  const locked = document.getElementById("locked");
-  const unlocked = document.getElementById("unlocked");
-
-  if (!unlockDate) {
-    console.error("Invalid day key:", dayKey);
-    locked.style.display = "block";
-    return;
-  }
-
-  if (today >= unlockDate) {
-    unlocked.style.display = "block";
-    locked.style.display = "none";
-  } else {
-    locked.style.display = "block";
-    unlocked.style.display = "none";
-  }
-}
-
-/* ---------- PROGRESS INDICATOR ---------- */
-function markProgress(currentDay) {
-  const order = [
-    "rose",
-    "propose",
-    "chocolate",
-    "teddy",
-    "promise",
-    "hug",
-    "kiss",
-    "valentine"
-  ];
-
-  const index = order.indexOf(currentDay);
-
-  document.querySelectorAll(".dot").forEach((dot, i) => {
-    if (i <= index) dot.classList.add("done");
-  });
-}
-
-/* ---------- AMBIENT HEARTS ---------- */
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerText = Math.random() > 0.5 ? "♡" : "♥";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = 8 + Math.random() * 6 + "s";
-
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 14000);
-}, 900);
+<script src="week.js"></script>
+</body>
+</html>
