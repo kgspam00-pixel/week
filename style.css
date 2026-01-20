@@ -1,253 +1,50 @@
 /* =========================
-   GLOBAL RESET & FONTS
-   ========================= */
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Cormorant Garamond', serif;
-  background: linear-gradient(180deg, #fff5f7, #fff);
-  color: #2b2b2b;
-  animation: fadeIn 1.2s ease forwards;
-  overflow-x: hidden;
-}
-
-/* Soft page fade */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* =========================
-   MAIN WRAPPER
-   ========================= */
-
-.week {
-  max-width: 680px;
-  margin: 40px auto;
-  padding: 42px 32px;
-  background: rgba(255, 248, 240, 0.92);
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================
-   TEXT STYLES
-   ========================= */
-
-h1 {
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  font-size: 18px;
-  opacity: 0.8;
-}
-
-p {
-  font-size: 22px;
-  line-height: 1.6;
-  margin: 20px 0;
-}
-
-.footer {
-  margin-top: 40px;
-  font-size: 18px;
-  opacity: 0.6;
-  text-align: center;
-}
-
-/* =========================
-   BUTTONS
-   ========================= */
-
-button {
-  font-family: 'Inter', sans-serif;
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: #ffccd5;
-  color: #5a1a1a;
-  font-size: 15px;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  background: #ffb3c1;
-}
-
-button.soft {
-  background: #f3f3f3;
-  color: #555;
-}
-
-/* =========================
-   PROGRESS INDICATOR
-   ========================= */
-
-.progress {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  opacity: 0.75;
-}
-
-.dot {
-  font-size: 18px;
-  filter: grayscale(1);
-  transition: all 0.3s ease;
-}
-
-.dot.done {
-  filter: grayscale(0);
-  transform: scale(1.15);
-}
-
-/* =========================
-   LANDING PAGE – DAY GRID
+   LANDING PAGE – DIARY STYLE
    ========================= */
 
 .days {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 16px;
-  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px 36px;
+  margin-top: 34px;
+  justify-content: center;
 }
 
 .day-btn {
-  padding: 18px 12px;
-  border-radius: 14px;
-  background: #fff;
-  text-align: center;
-  font-size: 18px;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  font-size: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  color: #6b2c91;
+  text-decoration: underline;
   cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  position: relative;
+  transition: all 0.25s ease;
 }
 
-/* Hover for unlocked */
+/* Hover for unlocked days */
 .day-btn:hover {
-  transform: translateY(-4px);
+  color: #9b4dcc;
+  transform: translateY(-1px);
 }
 
 /* =========================
-   LOCKED DAY – TEASING
+   LOCKED DAY – SOFT TEASE
    ========================= */
 
 .day-btn.locked {
-  opacity: 0.6;
-  filter: grayscale(1);
+  color: #b7a8c9;
+  text-decoration: none;
   cursor: not-allowed;
+  filter: grayscale(1);
 }
 
 .day-btn.locked::after {
-  content: "not yet 💭";
-  position: absolute;
-  bottom: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: #a55;
+  content: " (soon)";
+  font-size: 14px;
+  opacity: 0.6;
 }
 
 .day-btn.locked:hover {
-  animation: tease 0.6s ease;
-}
-
-.day-btn.locked:hover::after {
-  opacity: 1;
-}
-
-@keyframes tease {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  50% { transform: translateX(3px); }
-  75% { transform: translateX(-2px); }
-  100% { transform: translateX(0); }
-}
-
-/* =========================
-   FLOATING HEARTS (AMBIENT)
-   ========================= */
-
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 16px;
-  opacity: 0.15;
-  animation: floatUp 10s linear infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.15;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.6);
-    opacity: 0;
-  }
-}
-
-/* =========================
-   PARTICLES (YES CELEBRATION)
-   ========================= */
-
-.particle {
-  position: fixed;
-  font-size: 18px;
-  animation: burst 1.8s ease forwards;
-  pointer-events: none;
-  z-index: 10;
-}
-
-@keyframes burst {
-  from {
-    transform: translate(0,0) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translate(var(--x), var(--y)) scale(1.4);
-    opacity: 0;
-  }
-}
-
-/* =========================
-   MOBILE ADJUSTMENTS
-   ========================= */
-
-@media (max-width: 600px) {
-  .week {
-    margin: 20px 12px;
-    padding: 32px 22px;
-  }
-
-  p {
-    font-size: 20px;
-  }
-
-  h1 {
-    font-size: 26px;
-  }
+  transform: none;
 }
