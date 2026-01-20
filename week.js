@@ -1,66 +1,54 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   Valentine Week TEST MODE
+   ALL DAYS UNLOCKED
+   ========================= */
 
-  /* =========================
-     IST DATE UTILITY
-     ========================= */
-  function getISTDate() {
-    const now = new Date();
-    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-    return new Date(utc + 5.5 * 60 * 60 * 1000);
-  }
+// Get today's date in IST
+function getISTDate() {
+  const now = new Date();
+  const istOffset = 5.5 * 60 * 60 * 1000;
+  return new Date(now.getTime() + istOffset);
+}
 
+// 🔓 ALL days set to Jan 1, 2020 (always unlocked)
+const unlockDates = {
+  rose:      new Date(2020, 0, 1),
+  propose:   new Date(2020, 0, 1),
+  chocolate: new Date(2020, 0, 1),
+  teddy:     new Date(2020, 0, 1),
+  promise:   new Date(2020, 0, 1),
+  hug:       new Date(2020, 0, 1),
+  kiss:      new Date(2020, 0, 1),
+  valentine: new Date(2020, 0, 1)
+};
+
+// Main unlock handler
+function handleDayUnlock(dayKey) {
   const today = getISTDate();
+  today.setHours(0, 0, 0, 0);
 
-  /* =========================
-     UNLOCK DATES (VALENTINE WEEK)
-     ========================= */
-  const unlockDates = {
-    rose: new Date("2026-02-07T00:00:00"),
-    propose: new Date("2026-02-08T00:00:00"),
-    chocolate: new Date("2026-02-09T00:00:00"),
-    teddy: new Date("2026-02-10T00:00:00"),
-    promise: new Date("2026-02-11T00:00:00"),
-    hug: new Date("2026-02-12T00:00:00"),
-    kiss: new Date("2026-02-13T00:00:00"),
-    valentine: new Date("2026-02-14T00:00:00")
-  };
+  const unlockDate = unlockDates[dayKey];
 
-  /* =========================
-     LANDING PAGE LOGIC
-     ========================= */
-  const dayCards = document.querySelectorAll(".day");
+  const lockedSection = document.getElementById("locked");
+  const unlockedSection = document.getElementById("unlocked");
 
-  if (dayCards.length > 0) {
-    dayCards.forEach(card => {
-      const key = card.dataset.day;
-      const unlockDate = unlockDates[key];
-      const status = card.querySelector(".status");
-
-      if (!unlockDate || today < unlockDate) {
-        card.classList.add("locked");
-        if (status) status.innerText = "🔒";
-      } else {
-        if (status) status.innerText = "🔓";
-      }
-    });
+  if (!unlockDate) {
+    console.error("Unknown day key:", dayKey);
+    lockedSection.style.display = "block";
+    return;
   }
 
-  /* =========================
-     DAY PAGE UNLOCK HANDLER
-     ========================= */
-  window.handleDayUnlock = function (dayKey) {
-    const unlockDate = unlockDates[dayKey];
+  // ALWAYS TRUE in test mode
+  if (today >= unlockDate) {
+    unlockedSection.style.display = "block";
+    lockedSection.style.display = "none";
+  } else {
+    lockedSection.style.display = "block";
+    unlockedSection.style.display = "none";
+  }
+}
 
-    const lockedSection = document.getElementById("locked");
-    const unlockedSection = document.getElementById("unlocked");
-
-    if (!unlockDate || today < unlockDate) {
-      if (lockedSection) lockedSection.style.display = "block";
-      if (unlockedSection) unlockedSection.style.display = "none";
-    } else {
-      if (lockedSection) lockedSection.style.display = "none";
-      if (unlockedSection) unlockedSection.style.display = "block";
-    }
-  };
-
-});
+// Helper for landing page
+function isUnlocked(dayKey) {
+  return true; // EVERYTHING unlocked in test mode
+}
