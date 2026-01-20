@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine’s Day</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* ❤️ Valentine’s Day – grand & romantic */
+
+    .val-title {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+
+    .val-sub {
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .moment {
+      margin: 22px 0;
+      font-size: 22px;
+      line-height: 1.6;
+    }
+
+    .build {
+      margin: 28px 0;
+      font-size: 21px;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    .question {
+      margin-top: 42px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .choices {
+      position: relative;
+      margin-top: 30px;
+      height: 90px;
+    }
+
+    .choices button {
+      font-size: 16px;
+      padding: 12px 26px;
+    }
+
+    #yesBtn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-110px);
+    }
+
+    #noBtn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(20px);
+    }
+
+    .ending {
+      font-size: 24px;
+      font-weight: 500;
+      margin-top: 36px;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="week" id="day-root">
+
+  <!-- LOCKED -->
+  <section id="locked" style="display:none;">
+    <h1>Not yet ❤️</h1>
+    <p class="subtitle">
+      This page opens on Valentine’s Day.<br>
+      The best things wait for their moment.
+    </p>
+  </section>
+
+  <!-- UNLOCKED -->
+  <section id="unlocked" style="display:none;">
+
+    <h1 class="val-title">Valentine’s Day</h1>
+    <p class="val-sub">
+      Everything I wanted to say, all in one place.
+    </p>
+
+    <p class="moment">
+      Over this week, I gave you pieces of how I feel.
+    </p>
+
+    <p class="moment">
+      The softness.  
+      The laughter.  
+      The comfort.  
+      The desire.  
+      The choice.
+    </p>
+
+    <p class="moment">
+      But the truth is simpler than all of that.
+    </p>
+
+    <p class="build">
+      I feel at home with you.
+    </p>
+
+    <p class="moment">
+      In your presence.  
+      In your arms.  
+      In the way you exist so confidently as *you*.
+    </p>
+
+    <p class="moment">
+      Loving you doesn’t feel dramatic.
+    </p>
+
+    <p class="moment">
+      It feels natural.  
+      Steady.  
+      Like something I was always meant to do.
+    </p>
+
+    <p class="build">
+      So here it is — no metaphors, no pauses.
+    </p>
+
+    <p class="question">
+      Will you be my Valentine?
+    </p>
+
+    <div class="choices">
+      <button id="yesBtn">Yes ❤️</button>
+      <button id="noBtn" class="soft">No</button>
+    </div>
+
+    <div id="afterYes" style="display:none;">
+      <p class="ending">
+        I knew it.<br>
+        I just wanted to hear it from you.
+      </p>
+      <p class="footer">
+        I choose you. Always.
+      </p>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="../week.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  handleDayUnlock("valentine");
+
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const afterYes = document.getElementById("afterYes");
+
+  let triedOnce = false;
+
+  if (yesBtn && noBtn) {
+    yesBtn.addEventListener("click", () => {
+      celebrateYes();
+      afterYes.style.display = "block";
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+    });
+
+    noBtn.addEventListener("click", () => {
+      if (!triedOnce) {
+        triedOnce = true;
+        noBtn.innerText = "Try again";
+      }
+    });
+
+    const dodge = () => {
+      if (!triedOnce) return;
+      noBtn.style.transform =
+        `translate(${Math.random() * 160 - 80}px,
+                   ${Math.random() * 60 - 30}px)`;
+    };
+
+    noBtn.addEventListener("mouseenter", dodge);
+    noBtn.addEventListener("touchstart", dodge);
+  }
+
+  function celebrateYes() {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.innerText = Math.random() > 0.5 ? "❤️" : "♡";
+
+      const a = Math.random() * Math.PI * 2;
+      const d = 140 + Math.random() * 90;
+
+      p.style.left = cx + "px";
+      p.style.top = cy + "px";
+      p.style.setProperty("--x", Math.cos(a) * d + "px");
+      p.style.setProperty("--y", Math.sin(a) * d + "px");
+
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 2000);
+    }
+  }
+});
+</script>
+
+</body>
+</html>
