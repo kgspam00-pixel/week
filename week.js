@@ -3,15 +3,14 @@
    Timezone: IST
    ===================================== */
 
-/* ---------- IST DATE ---------- */
+/* IST DATE */
 function getISTDate() {
   const now = new Date();
   const utc = now.getTime() + now.getTimezoneOffset() * 60000;
   return new Date(utc + 5.5 * 60 * 60 * 1000);
 }
 
-/* ---------- UNLOCK DATES ---------- */
-/* NOTE: Month is 0-based (Feb = 1) */
+/* UNLOCK DATES (Feb = month 1) */
 const unlockDates = {
   rose:      new Date(2026, 1, 7),
   propose:   new Date(2026, 1, 8),
@@ -23,35 +22,32 @@ const unlockDates = {
   valentine: new Date(2026, 1, 14)
 };
 
-/* ---------- LANDING PAGE LOGIC ---------- */
+/* LANDING PAGE LOCKING */
 document.addEventListener("DOMContentLoaded", () => {
   const today = getISTDate();
   today.setHours(0, 0, 0, 0);
 
-  document.querySelectorAll("[data-day]").forEach(el => {
-    const key = el.dataset.day;
+  document.querySelectorAll(".day-btn").forEach(btn => {
+    const key = btn.dataset.day;
     const unlockDate = unlockDates[key];
 
     if (!unlockDate || today < unlockDate) {
-      el.classList.add("locked");
-    } else {
-      el.classList.remove("locked");
+      btn.classList.add("locked");
+      btn.addEventListener("click", e => e.preventDefault());
     }
   });
 });
 
-/* ---------- DAY PAGE HANDLER ---------- */
+/* DAY PAGE UNLOCK HANDLER */
 function handleDayUnlock(dayKey) {
   const today = getISTDate();
   today.setHours(0, 0, 0, 0);
 
   const unlockDate = unlockDates[dayKey];
-
   const locked = document.getElementById("locked");
   const unlocked = document.getElementById("unlocked");
 
   if (!unlockDate) {
-    console.error("Invalid day key:", dayKey);
     locked.style.display = "block";
     return;
   }
@@ -65,7 +61,7 @@ function handleDayUnlock(dayKey) {
   }
 }
 
-/* ---------- PROGRESS INDICATOR ---------- */
+/* PROGRESS DOTS */
 function markProgress(currentDay) {
   const order = [
     "rose",
@@ -79,13 +75,12 @@ function markProgress(currentDay) {
   ];
 
   const index = order.indexOf(currentDay);
-
   document.querySelectorAll(".dot").forEach((dot, i) => {
     if (i <= index) dot.classList.add("done");
   });
 }
 
-/* ---------- AMBIENT HEARTS ---------- */
+/* AMBIENT HEARTS */
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
