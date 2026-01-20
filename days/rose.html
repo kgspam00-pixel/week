@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rose Day</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* 🌸 Rose Day extras (page-specific) */
+
+    body {
+      overflow: hidden;
+    }
+
+    .flower {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      opacity: 0.4;
+      animation: floatFlower linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatFlower {
+      from {
+        transform: translateY(0) rotate(0deg);
+      }
+      to {
+        transform: translateY(-120vh) rotate(360deg);
+      }
+    }
+
+    .rose-title {
+      font-size: 28px;
+    }
+
+    .rose-sub {
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 26px;
+    }
+
+    .petal {
+      margin: 18px 0;
+      font-size: 22px;
+    }
+
+    .soft-note {
+      margin-top: 30px;
+      font-size: 16px;
+      opacity: 0.7;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="week" id="day-root">
+
+  <!-- LOCKED -->
+  <section id="locked" style="display:none;">
+    <h1>Not yet 🌹</h1>
+    <p class="subtitle">
+      This page opens on Rose Day.<br>
+      Some flowers bloom only when it’s time.
+    </p>
+  </section>
+
+  <!-- UNLOCKED -->
+  <section id="unlocked" style="display:none;">
+    <h1 class="rose-title">Rose Day</h1>
+    <p class="rose-sub">If I could give you one today, it would look like this.</p>
+
+    <p class="petal">
+      A rose doesn’t try to be impressive.<br>
+      It just exists — soft, certain, complete.
+    </p>
+
+    <p class="petal">
+      That’s how loving you feels.<br>
+      Natural. Easy. Unforced.
+    </p>
+
+    <p class="petal">
+      Every petal feels like a quiet choice.<br>
+      And I’d choose you in every one of them.
+    </p>
+
+    <p class="soft-note">
+      Come back tomorrow 🌷
+    </p>
+  </section>
+
+</main>
+
+<script src="../week.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    handleDayUnlock("rose");
+
+    // 🌸 Floating flowers (only when unlocked)
+    if (document.getElementById("unlocked").style.display !== "none") {
+      setInterval(() => {
+        const flower = document.createElement("div");
+        flower.className = "flower";
+        flower.innerText = ["🌸","🌷","🌹","🌺"][Math.floor(Math.random() * 4)];
+        flower.style.left = Math.random() * 100 + "vw";
+        flower.style.animationDuration = 8 + Math.random() * 6 + "s";
+        document.body.appendChild(flower);
+
+        setTimeout(() => flower.remove(), 15000);
+      }, 700);
+    }
+  });
+</script>
+
+</body>
+</html>
