@@ -1,54 +1,98 @@
-/* =========================
-   Valentine Week TEST MODE
-   ALL DAYS UNLOCKED
-   ========================= */
+/* =====================================
+   Valentine Week – FINAL Unlock Logic
+   Timezone: IST
+   ===================================== */
 
-// Get today's date in IST
+/* ---------- IST DATE ---------- */
 function getISTDate() {
   const now = new Date();
-  const istOffset = 5.5 * 60 * 60 * 1000;
-  return new Date(now.getTime() + istOffset);
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 5.5 * 60 * 60 * 1000);
 }
 
-// 🔓 ALL days set to Jan 1, 2020 (always unlocked)
+/* ---------- UNLOCK DATES ---------- */
+/* NOTE: Month is 0-based (Feb = 1) */
 const unlockDates = {
-  rose:      new Date(2020, 0, 1),
-  propose:   new Date(2020, 0, 1),
-  chocolate: new Date(2020, 0, 1),
-  teddy:     new Date(2020, 0, 1),
-  promise:   new Date(2020, 0, 1),
-  hug:       new Date(2020, 0, 1),
-  kiss:      new Date(2020, 0, 1),
-  valentine: new Date(2020, 0, 1)
+  rose:      new Date(2026, 1, 7),
+  propose:   new Date(2026, 1, 8),
+  chocolate: new Date(2026, 1, 9),
+  teddy:     new Date(2026, 1, 10),
+  promise:   new Date(2026, 1, 11),
+  hug:       new Date(2026, 1, 12),
+  kiss:      new Date(2026, 1, 13),
+  valentine: new Date(2026, 1, 14)
 };
 
-// Main unlock handler
+/* ---------- LANDING PAGE LOGIC ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  const today = getISTDate();
+  today.setHours(0, 0, 0, 0);
+
+  document.querySelectorAll("[data-day]").forEach(el => {
+    const key = el.dataset.day;
+    const unlockDate = unlockDates[key];
+
+    if (!unlockDate || today < unlockDate) {
+      el.classList.add("locked");
+    } else {
+      el.classList.remove("locked");
+    }
+  });
+});
+
+/* ---------- DAY PAGE HANDLER ---------- */
 function handleDayUnlock(dayKey) {
   const today = getISTDate();
   today.setHours(0, 0, 0, 0);
 
   const unlockDate = unlockDates[dayKey];
 
-  const lockedSection = document.getElementById("locked");
-  const unlockedSection = document.getElementById("unlocked");
+  const locked = document.getElementById("locked");
+  const unlocked = document.getElementById("unlocked");
 
   if (!unlockDate) {
-    console.error("Unknown day key:", dayKey);
-    lockedSection.style.display = "block";
+    console.error("Invalid day key:", dayKey);
+    locked.style.display = "block";
     return;
   }
 
-  // ALWAYS TRUE in test mode
   if (today >= unlockDate) {
-    unlockedSection.style.display = "block";
-    lockedSection.style.display = "none";
+    unlocked.style.display = "block";
+    locked.style.display = "none";
   } else {
-    lockedSection.style.display = "block";
-    unlockedSection.style.display = "none";
+    locked.style.display = "block";
+    unlocked.style.display = "none";
   }
 }
 
-// Helper for landing page
-function isUnlocked(dayKey) {
-  return true; // EVERYTHING unlocked in test mode
+/* ---------- PROGRESS INDICATOR ---------- */
+function markProgress(currentDay) {
+  const order = [
+    "rose",
+    "propose",
+    "chocolate",
+    "teddy",
+    "promise",
+    "hug",
+    "kiss",
+    "valentine"
+  ];
+
+  const index = order.indexOf(currentDay);
+
+  document.querySelectorAll(".dot").forEach((dot, i) => {
+    if (i <= index) dot.classList.add("done");
+  });
 }
+
+/* ---------- AMBIENT HEARTS ---------- */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = Math.random() > 0.5 ? "♡" : "♥";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 8 + Math.random() * 6 + "s";
+
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 14000);
+}, 900);
