@@ -1,86 +1,97 @@
 /* =========================
-   LANDING PAGE – DIARY STYLE
+   BASE RESET
    ========================= */
 
-.days {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px 36px;
-  margin-top: 34px;
-  justify-content: center;
+* {
+  box-sizing: border-box;
 }
 
-.day-btn {
-  background: none;
-  box-shadow: none;
+body {
+  margin: 0;
   padding: 0;
-  font-size: 20px;
+  min-height: 100vh;
   font-family: 'Cormorant Garamond', serif;
-  color: #6b2c91;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-/* Hover for unlocked days */
-.day-btn:hover {
-  color: #9b4dcc;
-  transform: translateY(-1px);
+  background: #fbf6f2;
+  color: #2e1c33;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
 }
 
 /* =========================
-   LOCKED DAY – SOFT TEASE
+   MAIN CONTAINER
    ========================= */
 
-.day-btn.locked {
-  color: #b7a8c9;
-  text-decoration: none;
-  cursor: not-allowed;
-  filter: grayscale(1);
-}
-
-.day-btn.locked::after {
-  content: " (soon)";
-  font-size: 14px;
-  opacity: 0.6;
-}
-
-.day-btn.locked:hover {
-  transform: none;
+.week {
+  max-width: 780px;
+  width: 100%;
+  margin: 60px 20px;
+  padding: 50px 60px;
+  background: #fff8f1;
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(120, 80, 140, 0.15);
+  position: relative;
 }
 
 /* =========================
-   COUNTDOWN – LANDING PAGE
+   HEADINGS & TEXT
+   ========================= */
+
+h1 {
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 18px;
+  opacity: 0.75;
+  margin-bottom: 30px;
+}
+
+/* =========================
+   INTRO MESSAGE
+   ========================= */
+
+.intro {
+  max-width: 560px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.intro p {
+  margin-bottom: 14px;
+}
+
+/* =========================
+   COUNTDOWN
    ========================= */
 
 .countdown {
-  margin: 28px 0 40px;
   text-align: center;
+  margin: 40px 0 50px;
 }
 
 .countdown-label {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 1px;
   opacity: 0.6;
 }
 
 #timer {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  margin: 10px 0;
-  color: #6b2c91;
+  font-size: 36px;
+  margin: 12px 0;
+  color: #7b3fa3;
+  animation: pulse 2.5s ease-in-out infinite;
 }
 
 .countdown-note {
   font-size: 15px;
+  opacity: 0.75;
   line-height: 1.6;
-  opacity: 0.7;
-}
-
-/* Soft pulse */
-#timer {
-  animation: pulse 2.5s ease-in-out infinite;
 }
 
 @keyframes pulse {
@@ -89,3 +100,110 @@
   100% { opacity: 0.6; }
 }
 
+/* =========================
+   DAYS LIST
+   ========================= */
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 36px;
+  justify-content: center;
+  margin: 40px 0 30px;
+}
+
+.day-btn {
+  font-size: 20px;
+  color: #6b2c91;
+  text-decoration: underline;
+  transition: all 0.25s ease;
+}
+
+.day-btn:hover {
+  color: #9b4dcc;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   LOCKED DAYS (DREAMY)
+   ========================= */
+
+.day-btn.locked {
+  color: #c6b8d6;
+  text-decoration: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: grayscale(0.4);
+}
+
+.day-btn.locked::after {
+  content: " — not yet";
+  font-size: 13px;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.day-btn.locked:hover {
+  transform: none;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.footer {
+  text-align: center;
+  font-size: 15px;
+  opacity: 0.6;
+  margin-top: 30px;
+}
+
+/* =========================
+   FLOATING HEARTS
+   ========================= */
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  opacity: 0.3;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+  .week {
+    padding: 36px 26px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .intro {
+    font-size: 17px;
+  }
+
+  .day-btn {
+    font-size: 18px;
+  }
+
+  #timer {
+    font-size: 30px;
+  }
+}
