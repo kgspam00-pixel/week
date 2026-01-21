@@ -5,8 +5,11 @@
   <title>For You — One Day at a Time</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- ABSOLUTE PATH (GitHub Pages safe) -->
+  <link rel="stylesheet" href="/week/style.css">
 </head>
 
 <body>
@@ -14,7 +17,34 @@
 <main class="week">
 
   <h1>For You — One Day at a Time</h1>
-  <p class="subtitle">Some things are meant to be opened slowly.</p>
+
+  <p class="subtitle">
+    Some things are meant to be opened slowly.
+  </p>
+
+  <!-- Sweet intro message -->
+  <div class="intro">
+    <p>
+      I wanted to do something a little different for my extremely smart and nerdy boyfriend.
+    </p>
+
+    <p>
+      Not loud. Not rushed.  
+      Just something that unfolds the way love does —
+      gently, intentionally, one day at a time.
+    </p>
+
+    <p>
+      So this is a small space I made for you.
+      Something to come back to.
+      Something to wait for.
+    </p>
+
+    <p>
+      Every day will have its own page.
+      And every page has a piece of my heart in it.
+    </p>
+  </div>
 
   <!-- Countdown -->
   <div class="countdown">
@@ -45,9 +75,10 @@
 
 </main>
 
-<script src="week.js"></script>
+<!-- Core logic -->
+<script src="/week/week.js"></script>
 
-<!-- Countdown script (SAFE & ISOLATED) -->
+<!-- Countdown script -->
 <script>
   function getISTNow() {
     const now = new Date();
@@ -55,7 +86,7 @@
     return new Date(utc + 5.5 * 60 * 60 * 1000);
   }
 
-  // CHANGE THIS if you want a different first opening time
+  // First unlock time (edit if needed)
   const firstUnlock = new Date(2026, 1, 7, 0, 0, 0); // Feb 7, 12:00 AM IST
 
   function updateTimer() {
