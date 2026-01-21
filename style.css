@@ -48,3 +48,44 @@
 .day-btn.locked:hover {
   transform: none;
 }
+
+/* =========================
+   COUNTDOWN – LANDING PAGE
+   ========================= */
+
+.countdown {
+  margin: 28px 0 40px;
+  text-align: center;
+}
+
+.countdown-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+
+#timer {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  margin: 10px 0;
+  color: #6b2c91;
+}
+
+.countdown-note {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+/* Soft pulse */
+#timer {
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
