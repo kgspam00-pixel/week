@@ -1,121 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Rose Day</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Rose Day 🌹</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
-  <style>
-    /* 🌸 Rose Day extras (page-specific) */
+<style>
+.rose-wrap {
+  text-align: center;
+  margin-top: 30px;
+}
 
-    body {
-      overflow: hidden;
-    }
+.roses {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  font-size: 44px;
+  margin: 28px 0;
+}
 
-    .flower {
-      position: fixed;
-      bottom: -20px;
-      font-size: 20px;
-      opacity: 0.4;
-      animation: floatFlower linear infinite;
-      pointer-events: none;
-    }
+.rose {
+  cursor: pointer;
+  transition: transform .25s ease;
+}
 
-    @keyframes floatFlower {
-      from {
-        transform: translateY(0) rotate(0deg);
-      }
-      to {
-        transform: translateY(-120vh) rotate(360deg);
-      }
-    }
+.rose:hover {
+  transform: scale(1.25) rotate(-6deg);
+}
 
-    .rose-title {
-      font-size: 28px;
-    }
+#roseMessage {
+  display: none;
+  margin-top: 26px;
+  font-size: 20px;
+  line-height: 1.6;
+  animation: fadeIn 0.6s ease;
+}
 
-    .rose-sub {
-      font-size: 18px;
-      opacity: 0.8;
-      margin-bottom: 26px;
-    }
-
-    .petal {
-      margin: 18px 0;
-      font-size: 22px;
-    }
-
-    .soft-note {
-      margin-top: 30px;
-      font-size: 16px;
-      opacity: 0.7;
-      font-style: italic;
-    }
-  </style>
+.back {
+  margin-top: 36px;
+}
+</style>
 </head>
 
 <body>
 
-<main class="week" id="day-root">
+<main class="card">
 
-  <!-- LOCKED -->
-  <section id="locked" style="display:none;">
-    <h1>Not yet 🌹</h1>
+  <!-- LOCK CHECK -->
+  <div id="locked" style="display:none">
+    <h1>🌹 Rose Day</h1>
+    <p>This page is still a bud.<br>Come back when it blooms.</p>
+    <a href="index.html">← Back</a>
+  </div>
+
+  <!-- UNLOCKED CONTENT -->
+  <div id="unlocked" style="display:none">
+
+    <h1>Rose Day 🌹</h1>
     <p class="subtitle">
-      This page opens on Rose Day.<br>
-      Some flowers bloom only when it’s time.
-    </p>
-  </section>
-
-  <!-- UNLOCKED -->
-  <section id="unlocked" style="display:none;">
-    <h1 class="rose-title">Rose Day</h1>
-    <p class="rose-sub">If I could give you one today, it would look like this.</p>
-
-    <p class="petal">
-      A rose doesn’t try to be impressive.<br>
-      It just exists — soft, certain, complete.
+      If I could, I’d hand you one in person.<br>
+      For now — pick one.
     </p>
 
-    <p class="petal">
-      That’s how loving you feels.<br>
-      Natural. Easy. Unforced.
-    </p>
+    <div class="rose-wrap">
+      <div class="roses">
+        <span class="rose">🌹</span>
+        <span class="rose">🌸</span>
+        <span class="rose">🌺</span>
+        <span class="rose">🌷</span>
+      </div>
 
-    <p class="petal">
-      Every petal feels like a quiet choice.<br>
-      And I’d choose you in every one of them.
-    </p>
+      <div id="roseMessage">
+        You picked the one I would’ve given you.<br><br>
+        Soft. Slightly dramatic. Completely sincere.<br><br>
+        Just like how I love you.
+      </div>
+    </div>
 
-    <p class="soft-note">
-      Come back tomorrow 🌷
-    </p>
-  </section>
+    <div class="back">
+      <a href="index.html">← Back to the diary</a>
+    </div>
+
+  </div>
 
 </main>
 
-<script src="../week.js"></script>
+<script src="week.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    handleDayUnlock("rose");
+/* unlock logic */
+handleDayUnlock("rose");
+markProgress("rose");
 
-    // 🌸 Floating flowers (only when unlocked)
-    if (document.getElementById("unlocked").style.display !== "none") {
-      setInterval(() => {
-        const flower = document.createElement("div");
-        flower.className = "flower";
-        flower.innerText = ["🌸","🌷","🌹","🌺"][Math.floor(Math.random() * 4)];
-        flower.style.left = Math.random() * 100 + "vw";
-        flower.style.animationDuration = 8 + Math.random() * 6 + "s";
-        document.body.appendChild(flower);
-
-        setTimeout(() => flower.remove(), 15000);
-      }, 700);
-    }
-  });
+/* rose interaction */
+document.querySelectorAll(".rose").forEach(r => {
+  r.onclick = () => {
+    document.getElementById("roseMessage").style.display = "block";
+  };
+});
 </script>
 
 </body>
