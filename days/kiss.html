@@ -1,65 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Kiss Day</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Kiss Day 💋</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css" />
 
-  <style>
-    /* 💋 Kiss Day – rough, teasing, intimate */
+<style>
+.kiss-title {
+  font-size: 28px;
+}
 
-    .kiss-title {
-      font-size: 28px;
-    }
+.kiss-sub {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 26px;
+}
 
-    .kiss-sub {
-      font-size: 18px;
-      opacity: 0.8;
-      margin-bottom: 34px;
-    }
+/* tease button */
 
-    .line {
-      margin: 22px 0;
-      font-size: 22px;
-    }
+.kiss-zone {
+  position: relative;
+  height: 140px;
+  margin: 30px 0;
+}
 
-    .slow {
-      margin: 30px 0;
-      font-size: 21px;
-      opacity: 0.85;
-      font-style: italic;
-    }
+.kiss-btn {
+  position: absolute;
+  padding: 14px 24px;
+  border-radius: 26px;
+  border: none;
+  background: #ffd6e6;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform .2s ease;
+}
 
-    .heat {
-      margin-top: 38px;
-      font-size: 25px;
-      font-weight: 500;
-    }
-  </style>
+/* reveal text */
+
+.reveal {
+  display: none;
+  animation: fadeIn .6s ease;
+}
+
+.line {
+  margin: 22px 0;
+  font-size: 22px;
+}
+
+.slow {
+  margin: 30px 0;
+  font-size: 21px;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+.heat {
+  margin-top: 38px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+/* kiss burst */
+
+.kiss-pop {
+  position: fixed;
+  font-size: 22px;
+  animation: floatUp 1.6s ease forwards;
+  pointer-events: none;
+}
+</style>
 </head>
 
 <body>
 
-<main class="week" id="day-root">
+<main class="week">
 
-  <!-- LOCKED -->
-  <section id="locked" style="display:none;">
-    <h1>Not yet 💋</h1>
-    <p class="subtitle">
-      This page opens on Kiss Day.<br>
-      Some closeness doesn’t like being rushed.
-    </p>
-  </section>
+<!-- LOCKED -->
+<section id="locked" style="display:none;">
+  <h1>Not yet 💋</h1>
+  <p class="subtitle">
+    This page opens on Kiss Day.<br>
+    Some closeness doesn’t like being rushed.
+  </p>
+</section>
 
-  <!-- UNLOCKED -->
-  <section id="unlocked" style="display:none;">
-    <h1 class="kiss-title">Kiss Day</h1>
-    <p class="kiss-sub">
-      This one isn’t soft.
-    </p>
+<!-- UNLOCKED -->
+<section id="unlocked" style="display:none;">
+
+  <h1 class="kiss-title">Kiss Day 💋</h1>
+  <p class="kiss-sub">
+    This one isn’t soft.<br>
+    Come steal it.
+  </p>
+
+  <!-- USP tease -->
+  <div class="kiss-zone" id="zone">
+    <button class="kiss-btn" id="kissBtn">
+      Steal a kiss
+    </button>
+  </div>
+
+  <!-- YOUR ORIGINAL TEXT — UNCHANGED -->
+  <div class="reveal" id="revealText">
 
     <p class="line">
       A kiss isn’t always gentle.
@@ -102,18 +147,61 @@
       I crave them more than I let on.
     </p>
 
-    <p class="footer">
-      Tomorrow, everything comes together ❤️
-    </p>
-  </section>
+  </div>
+
+  <p class="footer">
+    Tomorrow, everything comes together ❤️
+  </p>
+
+</section>
 
 </main>
 
 <script src="../week.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    handleDayUnlock("kiss");
-  });
+handleDayUnlock("kiss");
+markProgress("kiss");
+
+const btn = document.getElementById("kissBtn");
+const zone = document.getElementById("zone");
+const reveal = document.getElementById("revealText");
+
+let dodges = 0;
+
+function dodge(){
+  if (dodges >= 2) return;
+
+  const x = Math.random() * 160;
+  const y = Math.random() * 80;
+
+  btn.style.transform = `translate(${x}px, ${y}px)`;
+  dodges++;
+}
+
+btn.addEventListener("mouseenter", dodge);
+btn.addEventListener("touchstart", dodge);
+
+btn.onclick = (e) => {
+  if (dodges < 2) return;
+
+  reveal.style.display = "block";
+  burst(e.clientX, e.clientY);
+  btn.disabled = true;
+  btn.textContent = "Caught 💋";
+};
+
+function burst(x,y){
+  for(let i=0;i<12;i++){
+    const k = document.createElement("div");
+    k.className = "kiss-pop";
+    k.textContent = "💋";
+    k.style.left = x + "px";
+    k.style.top = y + "px";
+    document.body.appendChild(k);
+    setTimeout(()=>k.remove(),1600);
+  }
+}
 </script>
 
 </body>
