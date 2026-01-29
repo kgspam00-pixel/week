@@ -1,93 +1,119 @@
-/* =====================================
-   Valentine Week – FINAL Unlock Logic
-   Timezone: IST
-   ===================================== */
+/* =========================
+   VALENTINE WEEK ENGINE
+   TEST MODE — ALL UNLOCKED
+========================= */
 
-/* IST DATE */
-function getISTDate() {
-  const now = new Date();
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  return new Date(utc + 5.5 * 60 * 60 * 1000);
-}
+const TEST_MODE = true;
 
-/* UNLOCK DATES (Feb = month 1) */
-const unlockDates = {
-  rose:      new Date(2026, 1, 7),
-  propose:   new Date(2026, 1, 8),
-  chocolate: new Date(2026, 1, 9),
-  teddy:     new Date(2026, 1, 10),
-  promise:   new Date(2026, 1, 11),
-  hug:       new Date(2026, 1, 12),
-  kiss:      new Date(2026, 1, 13),
-  valentine: new Date(2026, 1, 14)
+/* Unlock dates (kept for reference, ignored in test mode) */
+const DAY_UNLOCK = {
+  rose: "2026-02-07",
+  propose: "2026-02-08",
+  chocolate: "2026-02-09",
+  teddy: "2026-02-10",
+  promise: "2026-02-11",
+  hug: "2026-02-12",
+  kiss: "2026-02-13",
+  valentine: "2026-02-14"
 };
 
-/* LANDING PAGE LOCKING */
-document.addEventListener("DOMContentLoaded", () => {
-  const today = getISTDate();
-  today.setHours(0, 0, 0, 0);
 
-  document.querySelectorAll(".day-btn").forEach(btn => {
-    const key = btn.dataset.day;
-    const unlockDate = unlockDates[key];
+/* ---------- Page Lock / Unlock ---------- */
 
-    if (!unlockDate || today < unlockDate) {
-      btn.classList.add("locked");
-      btn.addEventListener("click", e => e.preventDefault());
-    }
-  });
-});
-
-/* DAY PAGE UNLOCK HANDLER */
 function handleDayUnlock(dayKey) {
-  const today = getISTDate();
-  today.setHours(0, 0, 0, 0);
-
-  const unlockDate = unlockDates[dayKey];
   const locked = document.getElementById("locked");
   const unlocked = document.getElementById("unlocked");
 
-  if (!unlockDate) {
-    locked.style.display = "block";
+  if (!locked || !unlocked) return;
+
+  if (TEST_MODE) {
+    locked.style.display = "none";
+    unlocked.style.display = "block";
     return;
   }
 
+  const today = new Date().toISOString().slice(0, 10);
+  const unlockDate = DAY_UNLOCK[dayKey];
+
   if (today >= unlockDate) {
-    unlocked.style.display = "block";
     locked.style.display = "none";
+    unlocked.style.display = "block";
   } else {
     locked.style.display = "block";
     unlocked.style.display = "none";
   }
 }
 
-/* PROGRESS DOTS */
-function markProgress(currentDay) {
-  const order = [
-    "rose",
-    "propose",
-    "chocolate",
-    "teddy",
-    "promise",
-    "hug",
-    "kiss",
-    "valentine"
-  ];
 
-  const index = order.indexOf(currentDay);
-  document.querySelectorAll(".dot").forEach((dot, i) => {
-    if (i <= index) dot.classList.add("done");
-  });
+/* ---------- Progress Tracking ---------- */
+
+function markProgress(dayKey) {
+  try {
+    localStorage.setItem("vday_" + dayKey, "1");
+  } catch (e) {}
 }
 
-/* AMBIENT HEARTS */
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerText = Math.random() > 0.5 ? "♡" : "♥";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = 8 + Math.random() * 6 + "s";
+function getProgressCount() {
+  try {
+    return Object.keys(DAY_UNLOCK)
+      .filter(k => localStorage.getItem("vday_" + k) === "1")
+      .length;
+  } catch (e) {
+    return 0;
+  }
+}
 
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 14000);
-}, 900);
+
+/* ---------- Landing Progress Bar ---------- */
+
+function updateProgressBar() {
+  const bar = document.getElementById("progressFill");
+  if (!bar) return;
+
+  const done = getProgressCount();
+  const total = Object.keys(DAY_UNLOCK).length;
+  const pct = Math.round((done / total) * 100);
+
+  bar.style.width = pct + "%";
+}
+
+
+/* ---------- Countdown (Landing Page) ---------- */
+
+function startCountdown(targetDateStr) {
+  const el = document.getElementById("countdown");
+  if (!el) return;
+
+  if (TEST_MODE) {
+    el.textContent = "Unlocked for testing 💗";
+    return;
+  }
+
+  const target = new Date(targetDateStr + "T00:00:00");
+
+  function tick() {
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      el.textContent = "It begins ❤️";
+      return;
+    }
+
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor(diff / (1000*60*60) % 24);
+    const m = Math.floor(diff / (1000*60) % 60);
+
+    el.textContent = `${d}d ${h}h ${m}m`;
+  }
+
+  tick();
+  setInterval(tick, 60000);
+}
+
+
+/* ---------- Init Landing Helpers ---------- */
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateProgressBar();
+});
