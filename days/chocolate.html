@@ -1,108 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chocolate Day</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Chocolate Day 🍫</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css" />
 
-  <style>
-    /* 🍫 Chocolate Day – playful tone */
+<style>
+/* 🍫 Chocolate Day – playful + interactive */
 
-    .choco-title {
-      font-size: 28px;
-    }
+.choco-title {
+  font-size: 28px;
+}
 
-    .choco-sub {
-      font-size: 18px;
-      opacity: 0.8;
-      margin-bottom: 30px;
-    }
+.choco-sub {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
 
-    .line {
-      margin: 20px 0;
-      font-size: 22px;
-    }
+/* chocolate grid */
+.choco-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  gap: 12px;
+  justify-content: center;
+  margin: 24px 0 30px;
+}
 
-    .tease {
-      margin: 26px 0;
-      font-size: 20px;
-      font-style: italic;
-      opacity: 0.75;
-    }
+.choco {
+  width: 60px;
+  height: 60px;
+  background: #5a3422;
+  border-radius: 10px;
+  box-shadow: inset 0 -6px 0 rgba(0,0,0,.25);
+  cursor: pointer;
+  transition: transform .15s ease, opacity .2s ease;
+}
 
-    .sweet {
-      margin-top: 32px;
-      font-size: 23px;
-      font-weight: 500;
-    }
-  </style>
+.choco:hover {
+  transform: scale(1.08);
+}
+
+.choco.broken {
+  opacity: 0.25;
+  transform: scale(0.9);
+}
+
+/* reveal text */
+.reveal-line {
+  display: none;
+  margin: 18px 0;
+  font-size: 22px;
+  animation: fadeIn .5s ease;
+}
+
+.tease {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.sweet {
+  font-size: 23px;
+  font-weight: 500;
+  margin-top: 28px;
+}
+</style>
 </head>
 
 <body>
 
-<main class="week" id="day-root">
+<main class="week">
 
-  <!-- LOCKED -->
-  <section id="locked" style="display:none;">
-    <h1>Not yet 🍫</h1>
-    <p class="subtitle">
-      This page opens on Chocolate Day.<br>
-      Some sweetness needs the right timing.
-    </p>
-  </section>
+<!-- LOCKED -->
+<section id="locked" style="display:none;">
+  <h1>Not yet 🍫</h1>
+  <p class="subtitle">
+    This page opens on Chocolate Day.<br>
+    Some sweetness needs the right timing.
+  </p>
+</section>
 
-  <!-- UNLOCKED -->
-  <section id="unlocked" style="display:none;">
-    <h1 class="choco-title">Chocolate Day</h1>
-    <p class="choco-sub">
-      This one’s easy.
-    </p>
+<!-- UNLOCKED -->
+<section id="unlocked" style="display:none;">
 
-    <p class="line">
-      Chocolate is sweet.
-    </p>
+  <h1 class="choco-title">Chocolate Day</h1>
+  <p class="choco-sub">
+    Break a piece.<br>
+    Each one hides something sweet.
+  </p>
 
-    <p class="line">
+  <!-- USP: break chocolate -->
+  <div class="choco-grid" id="grid"></div>
+
+  <!-- YOUR ORIGINAL TEXT — preserved -->
+  <div id="lines">
+
+    <p class="reveal-line">Chocolate is sweet.</p>
+
+    <p class="reveal-line">
       It makes bad days softer.
     </p>
 
-    <p class="line">
-      It’s comforting, a little addictive,<br>
+    <p class="reveal-line">
+      It’s comforting, a little addictive,
       and somehow always improves my mood.
     </p>
 
-    <p class="tease">
+    <p class="reveal-line tease">
       Which is funny — because that sounds a lot like you.
     </p>
 
-    <p class="line">
+    <p class="reveal-line">
       I don’t need a box or a ribbon.
     </p>
 
-    <p class="line">
-      I just need you around,<br>
+    <p class="reveal-line">
+      I just need you around,
       being exactly who you are.
     </p>
 
-    <p class="sweet">
+    <p class="reveal-line sweet">
       You’re my favourite kind of sweet.
     </p>
 
-    <p class="footer">
-      Tomorrow feels warmer 🧸
-    </p>
-  </section>
+  </div>
+
+  <p class="footer">Tomorrow feels warmer 🧸</p>
+
+</section>
 
 </main>
 
 <script src="../week.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    handleDayUnlock("chocolate");
-  });
+handleDayUnlock("chocolate");
+markProgress("chocolate");
+
+/* build chocolate blocks */
+const grid = document.getElementById("grid");
+for (let i = 0; i < 12; i++) {
+  const d = document.createElement("div");
+  d.className = "choco";
+  grid.appendChild(d);
+}
+
+const blocks = document.querySelectorAll(".choco");
+const lines = document.querySelectorAll(".reveal-line");
+
+let shown = 0;
+
+blocks.forEach(b => {
+  b.onclick = () => {
+    if (b.classList.contains("broken")) return;
+    b.classList.add("broken");
+
+    if (shown < lines.length) {
+      lines[shown].style.display = "block";
+      shown++;
+    }
+  };
+});
 </script>
 
 </body>
