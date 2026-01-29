@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ✅ FIXED PATH -->
+<!-- correct relative path -->
 <link rel="stylesheet" href="../style.css">
 
 <style>
@@ -41,6 +41,24 @@
   animation: fadeIn 0.6s ease;
 }
 
+/* 🌸 floating petals */
+
+.petal {
+  position: fixed;
+  top: -20px;
+  font-size: 18px;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 .back {
   margin-top: 36px;
 }
@@ -51,14 +69,14 @@
 
 <main class="card">
 
-  <!-- LOCK CHECK -->
+  <!-- LOCKED -->
   <div id="locked" style="display:none">
     <h1>🌹 Rose Day</h1>
     <p>This page is still a bud.<br>Come back when it blooms.</p>
     <a href="../index.html">← Back</a>
   </div>
 
-  <!-- UNLOCKED CONTENT -->
+  <!-- UNLOCKED -->
   <div id="unlocked" style="display:none">
 
     <h1>Rose Day 🌹</h1>
@@ -75,11 +93,7 @@
         <span class="rose">🌷</span>
       </div>
 
-      <div id="roseMessage">
-        You picked the one I would’ve given you.<br><br>
-        Soft. Slightly dramatic. Completely sincere.<br><br>
-        Just like how I love you.
-      </div>
+      <div id="roseMessage"></div>
     </div>
 
     <div class="back">
@@ -90,7 +104,6 @@
 
 </main>
 
-<!-- ✅ FIXED PATH -->
 <script src="../week.js"></script>
 
 <script>
@@ -99,11 +112,47 @@ document.addEventListener("DOMContentLoaded", () => {
   handleDayUnlock("rose");
   markProgress("rose");
 
-  document.querySelectorAll(".rose").forEach(r => {
+  const messages = [
+    `🌹 Classic rose.<br><br>
+     For admiration.<br>
+     For the way I look at you and think — yes, him.`,
+
+    `🌸 Soft bloom.<br><br>
+     For your gentleness with me.<br>
+     The version of you only I get to see.`,
+
+    `🌺 Warm flower.<br><br>
+     For your presence.<br>
+     You don’t just enter rooms — you change them.`,
+
+    `🌷 Steady tulip.<br><br>
+     For consistency.<br>
+     For choosing — and staying.`
+  ];
+
+  const roses = document.querySelectorAll(".rose");
+  const box = document.getElementById("roseMessage");
+
+  roses.forEach((r, i) => {
     r.onclick = () => {
-      document.getElementById("roseMessage").style.display = "block";
+      box.innerHTML = messages[i];
+      box.style.display = "block";
+      burstPetals();
     };
   });
+
+  /* 🌸 petal burst */
+  function burstPetals() {
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement("div");
+      p.className = "petal";
+      p.innerText = Math.random() > 0.5 ? "🌸" : "🌺";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = (4 + Math.random() * 3) + "s";
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 7000);
+    }
+  }
 
 });
 </script>
