@@ -1,11 +1,11 @@
 /* =========================
    VALENTINE WEEK ENGINE
-   TEST MODE — ALL UNLOCKED
+   LIVE MODE — DATE LOCKED
 ========================= */
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
-/* Unlock dates (kept for reference, ignored in test mode) */
+/* Unlock dates */
 const DAY_UNLOCK = {
   rose: "2026-02-07",
   propose: "2026-02-08",
@@ -16,6 +16,16 @@ const DAY_UNLOCK = {
   kiss: "2026-02-13",
   valentine: "2026-02-14"
 };
+
+
+/* ---------- IST Date Helper ---------- */
+
+function getTodayISTString() {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const ist = new Date(utc + 5.5 * 60 * 60 * 1000);
+  return ist.toISOString().slice(0, 10);
+}
 
 
 /* ---------- Page Lock / Unlock ---------- */
@@ -32,8 +42,14 @@ function handleDayUnlock(dayKey) {
     return;
   }
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getTodayISTString();
   const unlockDate = DAY_UNLOCK[dayKey];
+
+  if (!unlockDate) {
+    locked.style.display = "block";
+    unlocked.style.display = "none";
+    return;
+  }
 
   if (today >= unlockDate) {
     locked.style.display = "none";
