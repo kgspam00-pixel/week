@@ -1,65 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Teddy Day</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Teddy Day 🧸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css" />
 
-  <style>
-    /* 🧸 Teddy Day – warmth + vulnerability */
+<style>
+/* 🧸 Teddy Day – warmth + interaction */
 
-    .teddy-title {
-      font-size: 28px;
-    }
+.teddy-title {
+  font-size: 28px;
+}
 
-    .teddy-sub {
-      font-size: 18px;
-      opacity: 0.8;
-      margin-bottom: 32px;
-    }
+.teddy-sub {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 26px;
+}
 
-    .line {
-      margin: 22px 0;
-      font-size: 22px;
-    }
+/* hug interaction */
+.hug-box {
+  text-align: center;
+  margin: 28px 0;
+}
 
-    .soft {
-      margin: 28px 0;
-      font-size: 20px;
-      opacity: 0.75;
-      font-style: italic;
-    }
+.hug-btn {
+  font-size: 18px;
+  padding: 14px 24px;
+  border-radius: 24px;
+  border: none;
+  background: #eadcf6;
+  cursor: pointer;
+}
 
-    .warm {
-      margin-top: 36px;
-      font-size: 23px;
-      font-weight: 500;
-    }
-  </style>
+.hug-meter {
+  width: 220px;
+  height: 14px;
+  background: #eee;
+  border-radius: 20px;
+  margin: 18px auto;
+  overflow: hidden;
+}
+
+.hug-fill {
+  height: 100%;
+  width: 0%;
+  background: #c89be6;
+  transition: width .1s linear;
+}
+
+.teddy-pop {
+  font-size: 60px;
+  display: none;
+  margin-top: 16px;
+  animation: pop .4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* reveal text */
+.reveal {
+  display: none;
+  animation: fadeIn .6s ease;
+}
+
+.line {
+  margin: 22px 0;
+  font-size: 22px;
+}
+
+.soft {
+  margin: 28px 0;
+  font-size: 20px;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.warm {
+  margin-top: 36px;
+  font-size: 23px;
+  font-weight: 500;
+}
+</style>
 </head>
 
 <body>
 
-<main class="week" id="day-root">
+<main class="week">
 
-  <!-- LOCKED -->
-  <section id="locked" style="display:none;">
-    <h1>Not yet 🧸</h1>
-    <p class="subtitle">
-      This page opens on Teddy Day.<br>
-      Some comfort can’t be rushed.
-    </p>
-  </section>
+<!-- LOCKED -->
+<section id="locked" style="display:none;">
+  <h1>Not yet 🧸</h1>
+  <p class="subtitle">
+    This page opens on Teddy Day.<br>
+    Some comfort can’t be rushed.
+  </p>
+</section>
 
-  <!-- UNLOCKED -->
-  <section id="unlocked" style="display:none;">
-    <h1 class="teddy-title">Teddy Day</h1>
-    <p class="teddy-sub">
-      This one is about warmth.
-    </p>
+<!-- UNLOCKED -->
+<section id="unlocked" style="display:none;">
+
+  <h1 class="teddy-title">Teddy Day 🧸</h1>
+  <p class="teddy-sub">
+    This one is about warmth.<br>
+    Press and hold to hug.
+  </p>
+
+  <!-- USP: Hug interaction -->
+  <div class="hug-box">
+    <button class="hug-btn" id="hugBtn">
+      Press & hold to hug
+    </button>
+
+    <div class="hug-meter">
+      <div class="hug-fill" id="hugFill"></div>
+    </div>
+
+    <div class="teddy-pop" id="teddy">🧸</div>
+  </div>
+
+  <!-- YOUR ORIGINAL TEXT – UNTOUCHED -->
+  <div class="reveal" id="revealText">
 
     <p class="line">
       There are days when I don’t need advice.
@@ -95,18 +162,54 @@
       My giant, snuggly teddy bear.
     </p>
 
-    <p class="footer">
-      Tomorrow is about promises 🤍
-    </p>
-  </section>
+  </div>
+
+  <p class="footer">
+    Tomorrow is about promises 🤍
+  </p>
+
+</section>
 
 </main>
 
 <script src="../week.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    handleDayUnlock("teddy");
-  });
+handleDayUnlock("teddy");
+markProgress("teddy");
+
+/* hug hold logic */
+const btn = document.getElementById("hugBtn");
+const fill = document.getElementById("hugFill");
+const teddy = document.getElementById("teddy");
+const text = document.getElementById("revealText");
+
+let progress = 0;
+let timer = null;
+
+function startHold(){
+  timer = setInterval(() => {
+    progress += 2;
+    fill.style.width = progress + "%";
+
+    if (progress >= 100){
+      clearInterval(timer);
+      teddy.style.display = "block";
+      text.style.display = "block";
+    }
+  }, 40);
+}
+
+function stopHold(){
+  clearInterval(timer);
+}
+
+btn.addEventListener("mousedown", startHold);
+btn.addEventListener("mouseup", stopHold);
+btn.addEventListener("mouseleave", stopHold);
+
+btn.addEventListener("touchstart", startHold);
+btn.addEventListener("touchend", stopHold);
 </script>
 
 </body>
