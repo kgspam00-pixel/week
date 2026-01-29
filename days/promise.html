@@ -1,143 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Promise Day</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Promise Day 🤍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css" />
 
-  <style>
-    /* 🤍 Promise Day – long, honest vows */
+<style>
+.promise-title {
+  font-size: 28px;
+}
 
-    .promise-title {
-      font-size: 28px;
-    }
+.promise-sub {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 30px;
+}
 
-    .promise-sub {
-      font-size: 18px;
-      opacity: 0.8;
-      margin-bottom: 34px;
-    }
+/* checklist */
 
-    .promise {
-      margin: 18px 0;
-      font-size: 21px;
-      line-height: 1.6;
-    }
+.promise-item {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  font-size: 21px;
+  line-height: 1.6;
+  cursor: pointer;
+}
 
-    .soft {
-      margin: 30px 0;
-      font-size: 20px;
-      opacity: 0.75;
-      font-style: italic;
-    }
+.promise-item input {
+  transform: scale(1.2);
+  cursor: pointer;
+}
 
-    .final {
-      margin-top: 38px;
-      font-size: 24px;
-      font-weight: 500;
-    }
-  </style>
+.promise-item.checked {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+/* heart pop */
+
+.heart-pop {
+  position: fixed;
+  font-size: 18px;
+  animation: floatUp 1.6s ease forwards;
+  pointer-events: none;
+}
+
+/* final lines */
+
+.soft {
+  margin: 30px 0;
+  font-size: 20px;
+  opacity: 0.75;
+  font-style: italic;
+  display: none;
+}
+
+.final {
+  margin-top: 36px;
+  font-size: 24px;
+  font-weight: 500;
+  display: none;
+}
+</style>
 </head>
 
 <body>
 
-<main class="week" id="day-root">
+<main class="week">
 
-  <!-- LOCKED -->
-  <section id="locked" style="display:none;">
-    <h1>Not yet 🤍</h1>
-    <p class="subtitle">
-      This page opens on Promise Day.<br>
-      Some promises should be spoken slowly.
-    </p>
-  </section>
+<!-- LOCKED -->
+<section id="locked" style="display:none;">
+  <h1>Not yet 🤍</h1>
+  <p class="subtitle">
+    This page opens on Promise Day.<br>
+    Some promises should be spoken slowly.
+  </p>
+</section>
 
-  <!-- UNLOCKED -->
-  <section id="unlocked" style="display:none;">
-    <h1 class="promise-title">Promise Day</h1>
-    <p class="promise-sub">
-      These aren’t dramatic promises.<br>
-      They’re the everyday ones.
-    </p>
+<!-- UNLOCKED -->
+<section id="unlocked" style="display:none;">
 
-    <p class="promise">
-      I promise to choose you — not just when it’s easy, but when it requires effort.
-    </p>
+  <h1 class="promise-title">Promise Day 🤍</h1>
+  <p class="promise-sub">
+    These aren’t dramatic promises.<br>
+    They’re the everyday ones.<br><br>
+    Check them with me.
+  </p>
 
-    <p class="promise">
-      I promise to be loyal.  
-      To never cheat.  
-      To never give my heart or attention where it doesn’t belong.
-    </p>
+  <!-- YOUR PROMISES — UNCHANGED TEXT -->
 
-    <p class="promise">
-      I promise to never walk away when things get uncomfortable.  
-      To stay. To talk. To work through it.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to choose you — not just when it’s easy, but when it requires effort.</label>
 
-    <p class="promise">
-      I promise to listen — really listen — even when you’re explaining the same thing for the third time.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to be loyal. To never cheat. To never give my heart or attention where it doesn’t belong.</label>
 
-    <p class="promise">
-      I promise to laugh at your bad jokes.<br>
-      And the ones that are so bad they circle back to being funny.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to never walk away when things get uncomfortable. To stay. To talk. To work through it.</label>
 
-    <p class="promise">
-      I promise to tolerate your dark humor,<br>
-      even when I roll my eyes a little.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to listen — really listen — even when you’re explaining the same thing for the third time.</label>
 
-    <p class="promise">
-      I promise to correct your English — gently —  
-      and pretend I didn’t enjoy being right.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to laugh at your bad jokes. And the ones that are so bad they circle back to being funny.</label>
 
-    <p class="promise">
-      I promise to be proud of you.  
-      And more importantly, to remind *you* of that when you forget.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to tolerate your dark humor, even when I roll my eyes a little.</label>
 
-    <p class="promise">
-      I promise to be your cheerleader —  
-      in rooms you walk into confidently, and in moments when you doubt yourself.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to correct your English — gently — and pretend I didn’t enjoy being right.</label>
 
-    <p class="promise">
-      I promise to celebrate your wins like they’re mine.  
-      Because they are.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to be proud of you. And more importantly, to remind you of that when you forget.</label>
 
-    <p class="promise">
-      I promise to be patient on your bad days,  
-      and grateful on the good ones.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to be your cheerleader — in rooms you walk into confidently, and in moments when you doubt yourself.</label>
 
-    <p class="soft">
-      I can’t promise perfection.<br>
-      But I can promise intention.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to celebrate your wins like they’re mine. Because they are.</label>
 
-    <p class="final">
-      This is me — choosing you, every day.
-    </p>
+  <label class="promise-item"><input type="checkbox"> I promise to be patient on your bad days, and grateful on the good ones.</label>
 
-    <p class="footer">
-      Tomorrow is about closeness 🫂
-    </p>
-  </section>
+  <!-- hidden until all checked -->
+
+  <p class="soft" id="softLine">
+    I can’t promise perfection.<br>
+    But I can promise intention.
+  </p>
+
+  <p class="final" id="finalLine">
+    This is me — choosing you, every day.
+  </p>
+
+  <p class="footer">
+    Tomorrow is about closeness 🫂
+  </p>
+
+</section>
 
 </main>
 
 <script src="../week.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    handleDayUnlock("promise");
+handleDayUnlock("promise");
+markProgress("promise");
+
+const items = document.querySelectorAll(".promise-item");
+const checks = document.querySelectorAll(".promise-item input");
+const soft = document.getElementById("softLine");
+const final = document.getElementById("finalLine");
+
+checks.forEach((cb, i) => {
+  cb.addEventListener("change", e => {
+    items[i].classList.toggle("checked");
+
+    popHeart(e.clientX, e.clientY);
+
+    if ([...checks].every(c => c.checked)) {
+      soft.style.display = "block";
+      final.style.display = "block";
+    }
   });
+});
+
+function popHeart(x, y){
+  const h = document.createElement("div");
+  h.className = "heart-pop";
+  h.textContent = "♡";
+  h.style.left = x + "px";
+  h.style.top = y + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 1600);
+}
 </script>
 
 </body>
