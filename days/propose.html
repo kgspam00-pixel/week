@@ -1,72 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Propose Day</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Propose Day 💍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css" />
 
-  <style>
-    /* 💍 Propose Day – vulnerable tone */
+<style>
+.propose-title {
+  font-size: 28px;
+}
 
-    .propose-title {
-      font-size: 28px;
-    }
+.propose-sub {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 26px;
+}
 
-    .propose-sub {
-      font-size: 18px;
-      opacity: 0.8;
-      margin-bottom: 30px;
-    }
+.envelope-box {
+  text-align: center;
+  margin: 20px 0 10px;
+}
 
-    .line {
-      margin: 22px 0;
-      font-size: 22px;
-    }
+.envelope {
+  font-size: 70px;
+  cursor: pointer;
+  transition: transform .3s ease;
+}
 
-    .pause {
-      margin: 32px 0;
-      font-size: 20px;
-      opacity: 0.75;
-      font-style: italic;
-    }
+.envelope:hover {
+  transform: scale(1.12) rotate(-4deg);
+}
 
-    .question {
-      margin-top: 36px;
-      font-size: 24px;
-      font-weight: 500;
-    }
+.open-btn {
+  margin-top: 14px;
+}
 
-    .signature {
-      margin-top: 28px;
-      font-size: 18px;
-      font-style: italic;
-      opacity: 0.85;
-    }
-  </style>
+.letter {
+  display: none;
+  margin-top: 26px;
+  animation: fadeIn .7s ease;
+}
+
+.line {
+  margin: 20px 0;
+  font-size: 22px;
+}
+
+.pause {
+  margin: 30px 0;
+  font-size: 20px;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.question {
+  margin-top: 34px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.signature {
+  margin-top: 26px;
+  font-size: 18px;
+  font-style: italic;
+  opacity: 0.85;
+}
+</style>
 </head>
 
 <body>
 
-<main class="week" id="day-root">
+<main class="week">
 
-  <!-- LOCKED -->
-  <section id="locked" style="display:none;">
-    <h1>Not yet 💍</h1>
-    <p class="subtitle">
-      This page opens on Propose Day.<br>
-      Some words need courage before they can be said.
-    </p>
-  </section>
+<!-- LOCKED -->
+<section id="locked" style="display:none;">
+  <h1>Not yet 💍</h1>
+  <p class="subtitle">
+    This page opens on Propose Day.<br>
+    Some words need courage before they can be said.
+  </p>
+</section>
 
-  <!-- UNLOCKED -->
-  <section id="unlocked" style="display:none;">
-    <h1 class="propose-title">Propose Day</h1>
-    <p class="propose-sub">
-      This is me, being honest.
-    </p>
+<!-- UNLOCKED -->
+<section id="unlocked" style="display:none;">
+
+  <h1 class="propose-title">Propose Day</h1>
+  <p class="propose-sub">This is me, being honest.</p>
+
+  <!-- USP: Envelope interaction -->
+  <div class="envelope-box">
+    <div class="envelope" id="env">💌</div>
+    <button class="open-btn" onclick="openLetter()">Open my heart</button>
+  </div>
+
+  <!-- YOUR ORIGINAL TEXT + MERGED WARMTH -->
+  <div class="letter" id="letter">
 
     <p class="line">
       I’ve never been very good at saying things before I’m sure.
@@ -85,11 +116,29 @@
     </p>
 
     <p class="line">
-      I don’t know what the future looks like.
+      I’m not promising perfection.
+    </p>
+
+    <p class="line">
+      I’m promising intention. Effort. Honesty.
+    </p>
+
+    <p class="line">
+      I don’t know exactly what the future looks like.
     </p>
 
     <p class="line">
       But I know who I want to walk into it with.
+    </p>
+
+    <p class="line">
+      With you, things feel safe and electric at the same time —
+      like home with a little bit of thunder.
+    </p>
+
+    <p class="line">
+      I don’t just want moments with you.<br>
+      I want a life with you.
     </p>
 
     <p class="question">
@@ -100,18 +149,24 @@
       — me, choosing you
     </p>
 
-    <p class="footer">
-      Tomorrow is sweeter 🍫
-    </p>
-  </section>
+  </div>
+
+  <p class="footer">Tomorrow is sweeter 🍫</p>
+
+</section>
 
 </main>
 
 <script src="../week.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    handleDayUnlock("propose");
-  });
+handleDayUnlock("propose");
+markProgress("propose");
+
+function openLetter() {
+  document.getElementById("env").textContent = "💖";
+  document.getElementById("letter").style.display = "block";
+}
 </script>
 
 </body>
