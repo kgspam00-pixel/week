@@ -1,11 +1,11 @@
 /* =========================
    VALENTINE WEEK ENGINE
-   LIVE MODE — DATE LOCKED
+   LIVE MODE — DATE LOCKED (IST SAFE)
 ========================= */
 
 const TEST_MODE = false;
 
-/* Unlock dates */
+/* Unlock dates (YYYY-MM-DD, IST based) */
 const DAY_UNLOCK = {
   rose: "2026-02-07",
   propose: "2026-02-08",
@@ -20,11 +20,11 @@ const DAY_UNLOCK = {
 
 /* ---------- IST Date Helper ---------- */
 
-function getTodayISTString() {
+function getTodayISTDate() {
   const now = new Date();
   const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  const ist = new Date(utc + 5.5 * 60 * 60 * 1000);
-  return ist.toISOString().slice(0, 10);
+  const istTime = new Date(utc + (5.5 * 60 * 60 * 1000));
+  return new Date(istTime.toISOString().slice(0, 10)); // normalized to 00:00
 }
 
 
@@ -42,18 +42,24 @@ function handleDayUnlock(dayKey) {
     return;
   }
 
-  const today = getTodayISTString();
-  const unlockDate = DAY_UNLOCK[dayKey];
+  const today = getTodayISTDate();
+  const unlockStr = DAY_UNLOCK[dayKey];
 
-  if (!unlockDate) {
+  if (!unlockStr) {
     locked.style.display = "block";
     unlocked.style.display = "none";
     return;
   }
 
+  const unlockDate = new Date(unlockStr);
+
+  console.log("Today IST:", today);
+  console.log("Unlock Date:", unlockDate);
+
   if (today >= unlockDate) {
     locked.style.display = "none";
     unlocked.style.display = "block";
+    markProgress(dayKey);
   } else {
     locked.style.display = "block";
     unlocked.style.display = "none";
@@ -94,7 +100,7 @@ function updateProgressBar() {
 }
 
 
-/* ---------- Countdown (Landing Page) ---------- */
+/* ---------- Countdown (IST Safe) ---------- */
 
 function startCountdown(targetDateStr) {
   const el = document.getElementById("countdown");
@@ -105,7 +111,7 @@ function startCountdown(targetDateStr) {
     return;
   }
 
-  const target = new Date(targetDateStr + "T00:00:00");
+  const target = new Date(targetDateStr + "T00:00:00+05:30");
 
   function tick() {
     const now = new Date();
@@ -116,9 +122,9 @@ function startCountdown(targetDateStr) {
       return;
     }
 
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor(diff / (1000*60*60) % 24);
-    const m = Math.floor(diff / (1000*60) % 60);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
 
     el.textContent = `${d}d ${h}h ${m}m`;
   }
@@ -128,7 +134,7 @@ function startCountdown(targetDateStr) {
 }
 
 
-/* ---------- Init Landing Helpers ---------- */
+/* ---------- Init (Auto Safe) ---------- */
 
 document.addEventListener("DOMContentLoaded", () => {
   updateProgressBar();
