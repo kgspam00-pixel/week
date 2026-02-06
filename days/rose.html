@@ -7,7 +7,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- correct relative path -->
 <link rel="stylesheet" href="../style.css">
 
 <style>
@@ -42,7 +41,6 @@
 }
 
 /* 🌸 floating petals */
-
 .petal {
   position: fixed;
   top: -20px;
@@ -109,22 +107,25 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+  // Let week.js decide locked/unlocked
   handleDayUnlock("rose");
-  markProgress("rose");
+
+  // Only mark progress IF unlocked is visible
+  const unlocked = document.getElementById("unlocked");
+  if (unlocked && unlocked.style.display === "block") {
+    markProgress("rose");
+  }
 
   const messages = [
     `🌹 Classic rose.<br><br>
      For admiration.<br>
      For the way I look at you and think — yes, him.`,
-
     `🌸 Soft bloom.<br><br>
      For your gentleness with me.<br>
      The version of you only I get to see.`,
-
     `🌺 Warm flower.<br><br>
      For your presence.<br>
      You don’t just enter rooms — you change them.`,
-
     `🌷 Steady tulip.<br><br>
      For consistency.<br>
      For choosing — and staying.`
@@ -141,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   });
 
-  /* 🌸 petal burst */
   function burstPetals() {
     for (let i = 0; i < 18; i++) {
       const p = document.createElement("div");
