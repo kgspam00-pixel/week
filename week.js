@@ -1,11 +1,11 @@
 /* =========================
    VALENTINE WEEK ENGINE
-   IST LOCKED — TIMEZONE SAFE
+   IST LOCKED — PRODUCTION SAFE
 ========================= */
 
 const TEST_MODE = false;
 
-/* Unlock dates (IST based, string safe) */
+/* Unlock dates (YYYY-MM-DD, IST based) */
 const DAY_UNLOCK = {
   rose: "2026-02-07",
   propose: "2026-02-08",
@@ -18,19 +18,33 @@ const DAY_UNLOCK = {
 };
 
 
-/* ---------- Get Today in IST (YYYY-MM-DD string) ---------- */
+/* =========================
+   GET TODAY IN IST (SAFE)
+========================= */
 
 function getTodayISTString() {
   const now = new Date();
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+
+  // Convert local time → UTC
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+
+  // Add IST offset (+5:30)
   const ist = new Date(utc + (5.5 * 60 * 60 * 1000));
-  return ist.toISOString().slice(0, 10);
+
+  const year = ist.getFullYear();
+  const month = String(ist.getMonth() + 1).padStart(2, "0");
+  const day = String(ist.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
 
 
-/* ---------- Page Lock / Unlock ---------- */
+/* =========================
+   PAGE LOCK / UNLOCK
+========================= */
 
 function handleDayUnlock(dayKey) {
+
   const locked = document.getElementById("locked");
   const unlocked = document.getElementById("unlocked");
 
@@ -54,7 +68,7 @@ function handleDayUnlock(dayKey) {
     return;
   }
 
-  // STRING comparison — safest option
+  // Safe string comparison
   if (today >= unlockDate) {
     locked.style.display = "none";
     unlocked.style.display = "block";
@@ -66,7 +80,9 @@ function handleDayUnlock(dayKey) {
 }
 
 
-/* ---------- Progress Tracking ---------- */
+/* =========================
+   PROGRESS TRACKING
+========================= */
 
 function markProgress(dayKey) {
   try {
@@ -85,7 +101,9 @@ function getProgressCount() {
 }
 
 
-/* ---------- Landing Progress Bar ---------- */
+/* =========================
+   LANDING PROGRESS BAR
+========================= */
 
 function updateProgressBar() {
   const bar = document.getElementById("progressFill");
@@ -99,7 +117,9 @@ function updateProgressBar() {
 }
 
 
-/* ---------- Init ---------- */
+/* =========================
+   INIT
+========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   updateProgressBar();
