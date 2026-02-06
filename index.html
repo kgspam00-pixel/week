@@ -8,15 +8,15 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
-  <!-- ABSOLUTE PATH (GitHub Pages safe) -->
-  <link rel="stylesheet" href="/week/style.css">
+  <!-- Use RELATIVE paths for GitHub Pages safety -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <main class="week">
 
-  <h1>For You — One Day at a Time</h1>
+  <h1>For You - One Day at a Time</h1>
 
   <p class="subtitle">
     Some things are meant to be opened slowly.
@@ -41,44 +41,41 @@
     </p>
 
     <p>
-      Every day will have its own page.
+      Every day has its own page.
       And every page has a piece of my heart in it.
     </p>
   </div>
 
-  <!-- Countdown -->
+  <!-- Dynamic Countdown / Status -->
   <div class="countdown">
-    <p class="countdown-label">Your first page opens in</p>
+    <p class="countdown-label" id="countdownLabel"></p>
     <div id="timer">calculating…</div>
-    <p class="countdown-note">
-      I made this for you.<br>
-      Come back when the clock says so ♡
-    </p>
+    <p class="countdown-note" id="countdownNote"></p>
   </div>
 
   <!-- Valentine Week Days -->
   <div class="days">
-    <a class="day-btn" data-day="rose" href="days/rose.html">🌹 Rose Day</a>
-    <a class="day-btn" data-day="propose" href="days/propose.html">💍 Propose Day</a>
-    <a class="day-btn" data-day="chocolate" href="days/chocolate.html">🍫 Chocolate Day</a>
-    <a class="day-btn" data-day="teddy" href="days/teddy.html">🧸 Teddy Day</a>
-    <a class="day-btn" data-day="promise" href="days/promise.html">🤍 Promise Day</a>
-    <a class="day-btn" data-day="hug" href="days/hug.html">🫂 Hug Day</a>
-    <a class="day-btn" data-day="kiss" href="days/kiss.html">💋 Kiss Day</a>
-    <a class="day-btn" data-day="valentine" href="days/valentine.html">❤️ Valentine’s Day</a>
+    <a class="day-btn" href="days/rose.html">🌹 Rose Day</a>
+    <a class="day-btn" href="days/propose.html">💍 Propose Day</a>
+    <a class="day-btn" href="days/chocolate.html">🍫 Chocolate Day</a>
+    <a class="day-btn" href="days/teddy.html">🧸 Teddy Day</a>
+    <a class="day-btn" href="days/promise.html">🤍 Promise Day</a>
+    <a class="day-btn" href="days/hug.html">🫂 Hug Day</a>
+    <a class="day-btn" href="days/kiss.html">💋 Kiss Day</a>
+    <a class="day-btn" href="days/valentine.html">❤️ Valentine’s Day</a>
   </div>
 
   <p class="footer">
-    This page unlocks itself.<br>
-    Nothing to do but wait.
+    Each page unlocks automatically at midnight IST.<br>
+    Nothing to do but show up ♡
   </p>
 
 </main>
 
 <!-- Core logic -->
-<script src="/week/week.js"></script>
+<script src="week.js"></script>
 
-<!-- Countdown script -->
+<!-- IST Safe Dynamic Countdown -->
 <script>
   function getISTNow() {
     const now = new Date();
@@ -86,25 +83,44 @@
     return new Date(utc + 5.5 * 60 * 60 * 1000);
   }
 
-  // First unlock time (edit if needed)
-  const firstUnlock = new Date(2026, 1, 7, 0, 0, 0); // Feb 7, 12:00 AM IST
+  const firstUnlock = new Date("2026-02-07T00:00:00+05:30");
+  const finalUnlock = new Date("2026-02-14T00:00:00+05:30");
+
+  const label = document.getElementById("countdownLabel");
+  const note = document.getElementById("countdownNote");
+  const timer = document.getElementById("timer");
 
   function updateTimer() {
     const now = getISTNow();
-    const diff = firstUnlock - now;
-    const timer = document.getElementById("timer");
 
-    if (diff <= 0) {
-      timer.innerHTML = "It’s time ♡";
-      return;
+    // BEFORE WEEK
+    if (now < firstUnlock) {
+      label.textContent = "Your first page opens in";
+      note.innerHTML = "I made this for you.<br>Come back when the clock says so ♡";
+
+      const diff = firstUnlock - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      timer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    // DURING WEEK
+    else if (now >= firstUnlock && now < finalUnlock) {
+      label.textContent = "Valentine Week is unfolding ♡";
+      note.innerHTML = "A new page unlocks every midnight IST.<br>Come back tomorrow for the next piece of my heart.";
+      timer.innerHTML = "";
+    }
 
-    timer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    // AFTER WEEK
+    else {
+      label.textContent = "All pages are unlocked ❤️";
+      note.innerHTML = "You now have the whole week. Keep them forever.";
+      timer.innerHTML = "";
+    }
   }
 
   updateTimer();
@@ -113,4 +129,3 @@
 
 </body>
 </html>
-
