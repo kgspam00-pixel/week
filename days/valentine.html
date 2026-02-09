@@ -2,84 +2,69 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Valentine’s Day ❤️</title>
+<title>Valentine’s Day</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css" />
 
 <style>
-.val-title { font-size: 32px; margin-bottom: 14px; }
-.val-sub { font-size: 18px; opacity: .85; margin-bottom: 28px; }
-
-.phase { display:none; animation: fadeIn .7s ease; }
-
-.moment { margin: 22px 0; font-size: 22px; line-height: 1.6; }
-.build { margin: 28px 0; font-size: 21px; font-style: italic; opacity: .85; }
-.deep { margin: 24px 0; font-size: 22px; }
-
-.next-btn {
-  margin-top: 18px;
-  padding: 12px 22px;
-  border-radius: 22px;
-  border: none;
-  background: #f1e4ff;
-  cursor: pointer;
+.quiz-box {
+  margin-top: 30px;
+  text-align: center;
 }
 
-/* question */
+.quiz-question {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
 
-.question {
+.quiz-options button {
+  margin: 10px;
+}
+
+.reaction {
+  margin-top: 18px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.hidden {
+  display: none;
+}
+
+.final-question {
   margin-top: 40px;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
 }
 
 .choices {
   position: relative;
-  margin-top: 28px;
-  height: 100px;
+  margin-top: 30px;
+  height: 90px;
 }
 
-.choices button {
+#yesBtn, #noBtn {
   font-size: 16px;
   padding: 12px 26px;
+  position: absolute;
 }
 
 #yesBtn {
-  position: absolute;
   left: 50%;
   transform: translateX(-110px);
 }
 
 #noBtn {
-  position: absolute;
   left: 50%;
   transform: translateX(20px);
 }
 
-/* finale */
-
-.ending {
-  font-size: 24px;
-  font-weight: 500;
-  margin-top: 36px;
-}
-
-/* particles */
-
-.particle {
-  position: fixed;
+.after-yes {
+  margin-top: 40px;
   font-size: 22px;
-  animation: explode 1.8s ease forwards;
-  pointer-events: none;
-}
-
-@keyframes explode {
-  to {
-    transform: translate(var(--x), var(--y));
-    opacity: 0;
-  }
+  text-align: center;
 }
 </style>
 </head>
@@ -92,174 +77,209 @@
 <section id="locked" style="display:none;">
   <h1>Not yet ❤️</h1>
   <p class="subtitle">
-    The best things wait for their moment.
+    The best part waits for its moment.
   </p>
 </section>
 
 <!-- UNLOCKED -->
 <section id="unlocked" style="display:none;">
 
-<h1 class="val-title">Valentine’s Day ❤️</h1>
-<p class="val-sub">Stay with me for this one.</p>
+<h1>Valentine’s Day</h1>
 
-<!-- PHASE 1 — YOUR ORIGINAL CORE -->
-<div class="phase" id="p1">
-
-<p class="moment">Over this week, I gave you pieces of how I feel.</p>
-
-<p class="moment">
-The softness.  
-The laughter.  
-The comfort.  
-The desire.  
-The choice.
-</p>
-
-<p class="moment">
-But the truth is simpler than all of that.
-</p>
-
-<p class="build">I feel at home with you.</p>
-
-<button class="next-btn" onclick="nextPhase()">Keep reading</button>
-</div>
-
-<!-- PHASE 2 — NEW VULNERABLE EXPANSION -->
-<div class="phase" id="p2">
-
-<p class="deep">
-I don’t say things like this lightly.
-</p>
-
-<p class="deep">
-I’m not impulsive with my heart.  
-I’m careful. Protective. Slow.
-</p>
-
-<p class="deep">
-And yet with you —  
-I didn’t fall by accident.
-I walked in knowingly.
-</p>
-
-<p class="deep">
-You are not a phase to me.  
-Not a distraction.  
-Not a maybe.
-</p>
-
-<p class="deep">
-You are a decision I keep making — calmly, clearly, daily.
+<p class="build">
+Over this week, I showed you pieces of how I feel.
 </p>
 
 <p class="build">
-Not because I have to.  
-Because I want to.
+The softness.  
+The laughter.  
+The comfort.  
+The desire.
 </p>
-
-<button class="next-btn" onclick="nextPhase()">One more thing</button>
-</div>
-
-<!-- PHASE 3 — ASK -->
-<div class="phase" id="p3">
 
 <p class="moment">
-No metaphors now.  
-No build-up left.
+But loving you has also been… fun.
 </p>
 
-<p class="question">
-Will you be my Valentine?
-</p>
+<hr style="margin:40px 0; opacity:.3;">
 
-<div class="choices">
-  <button id="yesBtn">Yes ❤️</button>
-  <button id="noBtn">No</button>
+<div id="quizSection" class="quiz-box">
+
+  <div class="quiz-question" id="questionText"></div>
+
+  <div class="quiz-options">
+    <button id="optionA"></button>
+    <button id="optionB"></button>
+  </div>
+
+  <div class="reaction hidden" id="reactionText"></div>
+
 </div>
 
-<div id="afterYes" style="display:none;">
-  <p class="ending">
-    I knew it.<br>
-    I just wanted to hear it from you.
+<div id="finalSection" class="hidden">
+
+  <p class="moment">
+    Jokes aside…
   </p>
-  <p class="footer">
+
+  <p class="moment">
+    I don’t feel dramatic about you.
+  </p>
+
+  <p class="moment">
+    I feel steady.
+  </p>
+
+  <p class="moment">
+    I feel safe.
+  </p>
+
+  <p class="moment">
+    I feel like I want to keep choosing you.
+  </p>
+
+  <p class="final-question">
+    So tell me —
+  </p>
+
+  <p class="final-question">
+    Will you be my Valentine?
+  </p>
+
+  <div class="choices">
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <div id="afterYes" class="after-yes hidden">
+    I knew it.<br><br>
     I choose you. Always.
-  </p>
-</div>
+  </div>
 
 </div>
-<div class="back">
-      <a href="../index.html">← Back to the diary</a>
-    </div>
+
 </section>
-
 </main>
 
 <script src="../week.js"></script>
 
 <script>
-handleDayUnlock("valentine");
-markProgress("valentine");
+document.addEventListener("DOMContentLoaded", () => {
 
-/* phase flow */
-let phase = 1;
-document.getElementById("p1").style.display = "block";
+  handleDayUnlock("valentine");
+  markProgress("valentine");
 
-function nextPhase(){
-  document.getElementById("p"+phase).style.display="none";
-  phase++;
-  document.getElementById("p"+phase).style.display="block";
-}
+  const questions = [
+    {
+      q: "Who blushes first?",
+      a: "You pretending you don’t",
+      b: "Me, obviously",
+      r: "Correct. It’s adorable either way."
+    },
+    {
+      q: "Who replies faster?",
+      a: "You, even in meetings",
+      b: "You, even in meetings",
+      r: "You are painfully consistent."
+    },
+    {
+      q: "Our kisses are…",
+      a: "Soft",
+      b: "Dangerous",
+      r: "Exactly. Both."
+    },
+    {
+      q: "Who overthinks more?",
+      a: "Me",
+      b: "Still me",
+      r: "But you still stay."
+    },
+    {
+      q: "What are we, really?",
+      a: "A little chaotic",
+      b: "A little perfect",
+      r: "That’s the best combination."
+    }
+  ];
 
-/* yes/no logic */
+  let index = 0;
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const afterYes = document.getElementById("afterYes");
+  const questionText = document.getElementById("questionText");
+  const optionA = document.getElementById("optionA");
+  const optionB = document.getElementById("optionB");
+  const reaction = document.getElementById("reactionText");
+  const quizSection = document.getElementById("quizSection");
+  const finalSection = document.getElementById("finalSection");
 
-let triedOnce = false;
+  function loadQuestion() {
+    if (index >= questions.length) {
+      quizSection.classList.add("hidden");
+      finalSection.classList.remove("hidden");
+      return;
+    }
 
-yesBtn?.addEventListener("click", (e) => {
-  celebrate(e.clientX, e.clientY);
-  afterYes.style.display="block";
-  yesBtn.style.display="none";
-  noBtn.style.display="none";
-});
-
-noBtn?.addEventListener("click", () => {
-  if (!triedOnce){
-    triedOnce = true;
-    noBtn.innerText = "Try again";
+    questionText.textContent = questions[index].q;
+    optionA.textContent = questions[index].a;
+    optionB.textContent = questions[index].b;
+    reaction.classList.add("hidden");
   }
-});
 
-function dodge(){
-  if (!triedOnce) return;
-  noBtn.style.transform =
-   `translate(${Math.random()*160-80}px,
-              ${Math.random()*60-30}px)`;
-}
-
-noBtn?.addEventListener("mouseenter", dodge);
-noBtn?.addEventListener("touchstart", dodge);
-
-/* heart explosion */
-
-function celebrate(x,y){
-  for(let i=0;i<36;i++){
-    const p=document.createElement("div");
-    p.className="particle";
-    p.innerText=Math.random()>0.5?"❤️":"♡";
-    const a=Math.random()*Math.PI*2;
-    const d=160+Math.random()*120;
-    p.style.left=x+"px";
-    p.style.top=y+"px";
-    p.style.setProperty("--x",Math.cos(a)*d+"px");
-    p.style.setProperty("--y",Math.sin(a)*d+"px");
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(),1800);
+  function handleAnswer() {
+    reaction.textContent = questions[index].r;
+    reaction.classList.remove("hidden");
+    index++;
+    setTimeout(loadQuestion, 1200);
   }
-}
+
+  optionA.onclick = handleAnswer;
+  optionB.onclick = handleAnswer;
+
+  loadQuestion();
+
+  // YES / NO MECHANISM
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const afterYes = document.getElementById("afterYes");
+
+  let triedOnce = false;
+
+  yesBtn.onclick = () => {
+    celebrate();
+    afterYes.classList.remove("hidden");
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+  };
+
+  noBtn.onclick = () => {
+    if (!triedOnce) {
+      triedOnce = true;
+      noBtn.textContent = "Try again";
+    }
+  };
+
+  const dodge = () => {
+    if (!triedOnce) return;
+    noBtn.style.transform =
+      `translate(${Math.random()*160 - 80}px,
+                 ${Math.random()*60 - 30}px)`;
+  };
+
+  noBtn.addEventListener("mouseenter", dodge);
+  noBtn.addEventListener("touchstart", dodge);
+
+  function celebrate() {
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.innerText = Math.random() > 0.5 ? "❤️" : "♡";
+      p.style.left = Math.random()*100 + "vw";
+      p.style.top = Math.random()*100 + "vh";
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 2000);
+    }
+  }
+
+});
 </script>
 
 </body>
